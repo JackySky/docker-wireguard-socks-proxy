@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: wg-socks
+  name: wg-socks-deployment
+  labels:
+    app: wg-socks
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wg-socks
+  template:
+    metadata:
+      namespace: wg-socks
+      labels:
+        app: wg-socks
+    spec:
+      volumes:
+        - name: conf-file
+          hostPath:
+            path: /home/wslsu/repo/docker-wireguard-socks-proxy/wg-config
+            type: Directory
+      containers:
+      - name: wg-socks
+        image: ghcr.io/jackysky/docker-wireguard-socks-proxy:wsl
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 1080
+        volumeMounts:
+         - name: conf-file
+           mountPath: /etc/wireguard/           
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN"]
