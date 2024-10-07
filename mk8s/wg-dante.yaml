@@ -23,7 +23,7 @@ spec:
             type: Directory
       containers:
       - name: wg-socks
-        image: ghcr.io/jackysky/docker-wireguard-socks-proxy:wsl
+        image: ghcr.io/jackysky/docker-wireguard-socks-proxy:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 1080
